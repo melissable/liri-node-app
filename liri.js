@@ -82,17 +82,17 @@ function spotifySong(song) {
 		if (err) throw err;
 	});
 
-	// If no song is provided, LIRI defaults to 'The Sign' by Ace Of Base
+	// LIRI defaults to 'I Did It My Way' by Frank Sinatra if no song provided
 	var search;
 	if (song === '') {
-		search = 'The Sign Ace Of Base';
+		search = 'I Did It My Way Frank Sinatra';
 	} else {
 		search = song;
 	}
 
 	spotify.search({ type: 'track', query: search}, function(error, data) {
 	    if (error) {
-			var errorStr1 = 'ERROR: Retrieving Spotify track -- ' + error;
+			var errorStr1 = 'ERROR: Unable to retrieve Spotify track -- ' + error;
 
 			// Append the error string to the log file
 			fs.appendFile('./log.txt', errorStr1, (err) => {
@@ -103,7 +103,7 @@ function spotifySong(song) {
 	    } else {
 			var songInfo = data.tracks.items[0];
 			if (!songInfo) {
-				var errorStr2 = 'ERROR: No song info retrieved, please check the spelling of the song name!';
+				var errorStr2 = 'ERROR: No song info retrieved; please check the spelling of the song name.';
 
 				// Append the error string to the log file
 				fs.appendFile('./log.txt', errorStr2, (err) => {
@@ -138,10 +138,10 @@ function retrieveOBDBInfo(movie) {
 		if (err) throw err;
 	});
 
-	// If no movie is provided, LIRI defaults to 'Mr. Nobody'
+	// LIRI defaults to 'Interstellar', if no movie is provided
 	var search;
 	if (movie === '') {
-		search = 'Mr. Nobody';
+		search = 'Interstellar';
 	} else {
 		search = movie;
 	}
@@ -166,7 +166,7 @@ function retrieveOBDBInfo(movie) {
 		} else {
 			var data = JSON.parse(body);
 			if (!data.Title && !data.Released && !data.imdbRating) {
-				var errorStr2 = 'ERROR: No movie info retrieved, please check the spelling of the movie name!';
+				var errorStr2 = 'ERROR: No movie info retrieved; please check the spelling of the movie name.';
 
 				// Append the error string to the log file
 				fs.appendFile('./log.txt', errorStr2, (err) => {
